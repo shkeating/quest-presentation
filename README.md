@@ -1,12 +1,12 @@
 This repository contains a fully accessible, code-driven slide deck built with **Astro** and **Reveal.js** for my presentation slides for SUNY Oswego Quest 2026.
 
-## 🚀 Key Features
+## Key Features
 * **Astro-Native:** Leverages Astro's zero-JS-by-default architecture for the core layout, ensuring a fast and accessible baseline.
 * **Reveal.js Integration:** Uses the Reveal.js engine for professional slide transitions and technical features like code highlighting.
 * **Component-Based Slides:** Each slide or section is managed as a standalone Astro component for better organization and reusability.
 * **Accessibility First:** Designed with semantic HTML and keyboard navigation in mind to reflect the core values of the research.
 
-## 📂 Project Structure
+## Project Structure
 
 The project follows a standard Astro directory structure with specific integration for Reveal.js:
 
@@ -22,7 +22,7 @@ The project follows a standard Astro directory structure with specific integrati
 └── package.json          # Project dependencies and scripts
 ```
 
-## 🛠️ How to Use
+## How to Use
 
 ### Development
 To start the local development server for your presentation:
@@ -40,7 +40,7 @@ The presentation will be available at `localhost:4321`.
 * **Scripts:** Edit `src/scripts/presentation.js` to change Reveal.js configurations like transition speed, controls, or plugins.
 * **Styles:** Modify `src/styles/global.css` to override Reveal.js default themes or add custom brand colors for your SUNY Oswego presentation.
 
-## 🧞 Commands
+## Commands
 
 | Command | Action |
 | :--- | :--- |
