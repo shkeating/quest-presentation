@@ -1,10 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Intro from "../components/Intro.astro";
-import End from "../components/End.astro";
+import slidesContent from "../slides.md?raw";
 ---
 
 <Layout>
-  <Intro />
-  <End />
+  <section data-markdown>
+    <textarea data-template>
+      {slidesContent}
+    </textarea>
+  </section>
 </Layout>
