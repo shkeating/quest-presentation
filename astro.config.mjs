@@ -5,5 +5,8 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   vite: {
     plugins: []
-  }
+  },
+  site: 'https://shkeating.github.io',
+  base: 'quest-presentation',
+  
 });
