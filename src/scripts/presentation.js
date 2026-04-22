@@ -5,7 +5,7 @@ import Markdown from "reveal.js/plugin/markdown/markdown.esm.js"; //
 export function initPresentation() {
   const deck = new Reveal({
     plugins: [Highlight, Markdown], // Add Markdown here
-    // Optional: Configure delimiters for your slides
+    transition: "fade",
     markdown: {
       separator: "^---", // Horizontal rule --- creates a new slide
       verticalSeparator: "^--", // Double dash -- creates a vertical slide

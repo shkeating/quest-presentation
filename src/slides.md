@@ -1,5 +1,5 @@
 # Expanding WCAG Success Criteria Testing Coverage with Browser-Native SLMs
-![nano-a11y-auditor logo](img/nano-a11y-audit-logo.png)
+![nano-a11y-auditor logo](img/logo-light-text.png)
 
 **Shauna Keating**
 <br>
@@ -22,7 +22,7 @@ SUNY Oswego Dept of Computer Science
 ---
 
 ## The LLM Trade-off
-* Recent studies prove Large Language Models (LLMs) can close this gap. In 2025, multiple studies were published showing promising reuslts in expanding uaotmated testing using flagship LLMs such as GPT 4o and Claude Sonnet, which used APIs to query the LLMs against public web page content.
+Recent studies prove Large Language Models (LLMs) can close this gap. In 2025, multiple studies were published showing promising reuslts in expanding uaotmated testing using flagship LLMs such as GPT 4o and Claude Sonnet, which used APIs to query the LLMs against public web page content.
 
 <small>source: [Enhancing Web Accessibility (He, Huq, & Malek, 2025)](https://seal.ics.uci.edu/projects/GenA11y/index.html) <br> [RoboWCAG (Sheitanov 2025)](https://trepo.tuni.fi/handle/10024/231152)</small>
 
@@ -48,47 +48,47 @@ Just because we **can** use the biggest model possible to do **everything**... s
 ---
 
 ## SLMs: Small Language Models
-* Shifting from massive, general LLMs to specialized **Small Language Models (SLMs)** (compact AI systems with fewer parameters).
+* Shifting from massive, general LLMs to specialized **Small Language Models (SLMs)**, compact AI systems with fewer parameters.
 * Google Chrome has the experimental built-in **Gemini Nano** model, which is 2GB and is hosted entirely on the user's machine. Not fully released yet, but an easy avenue to access SLMs that need browser context.
 * Model comes to the data, data never leaves the network.
 * Free to use, no token limits or money needed to use
 
-<small>source: [Small Language Models are the Future of Agentic AI (Belcak et al. 2025)](https://research.nvidia.com/labs/lpr/slm-agents/)</small>
+<small>source: [Small Language Models are the Future of Agentic AI (Belcak et al. 2025)](https://research.nvidia.com/labs/lpr/slm-agents/), [Google Chrome: Built in AI APIs](https://developer.chrome.com/docs/ai/built-in-apis)</small>
 
 ---
 
 ## Introducing nano-a11y-auditor
-A browser extension combining axe-core with on-device generative AI.
+A browser extension combining axe-core with on-device SLMs, and data optimization and metrics in line with accessibility industry standards.
 
-![Active Test Run of nano-a11y-auditor](img/active-test-run.jpg)
+![Active Test Run of nano-a11y-auditor](img/active-test-run.png)
 
+---
+## Introducing nano-a11y-auditor
 ### My goals
 
-1. Not use AI for absolutely everything; axe does a great job testing for what it can test for
+1. Not use AI for absolutely everything; axe does a great job testing for what it can test for - many of the tools I looked at used AI prompting for things easily determined with the basic scripts in axe-core
 2. Extend this capability with AI tools, and deliver the right context via js extraction, to make is possible to use a smaller model, and still get accurate results.
 3. Provide a user-friendly interface, and deliver easy to understand result metrics that other automated accessibility tools don't 
 4. Data compatibility with industry standard WCAG EM report tool. This allows the user to test for remaining criteria, and clearly see whats left to do, or even hand it off to someone with more accessibility experience to get assistance.
 
 ---
 
-## The Layered Approach
+## What's under the hood
 Instead of AI doing everything, delegate appropriately:
-1. **axe-core:** Fast, reliable code-level syntax evaluation.
-2. **Chrome Debugger API:** Validates layout, reflow, and dynamic viewports.
-3. **On-Device AI Layer:**
-   * **Prompt API (Gemini Nano):** Evaluates semantic context (e.g., identifying vague link text).
-   * **Language Detector API:** Cross-references the coded `lang` attribute against the actual text.
-   * **Shape Detector API:** Assists with multimodal and visual structure checks.
-   * **Summarizer API:** Condenses DOM context for more efficient evaluation.
+1. **[axe-core](https://github.com/dequelabs/axe-core):** Fast, reliable code-level syntax evaluation.
+2. **On-Device AI Layer:**
+   * **[Prompt API (Gemini Nano)](https://github.com/webmachinelearning/prompt-api):** Evaluates semantic context (e.g., identifying vague link text).
+   * **[Language Detector API](https://developer.mozilla.org/en-US/docs/Web/API/Translator_and_Language_Detector_APIs):** Cross-references the coded `lang` attribute against the actual text.
+   * **[Summarizer API](https://developer.mozilla.org/en-US/docs/Web/API/Summarizer):** Condenses DOM context for more efficient evaluation.
+3. **[Chrome Debugger API](https://developer.chrome.com/docs/extensions/reference/api/debugger):** Validates layout, reflow, and dynamic viewports.
+4. **[Shape Detector API](https://developer.chrome.com/docs/capabilities/shape-detection):** Assists with multimodal and visual structure checks.
 
 <small>source: [Built-in AI APIs (Klepper 2024)](https://developer.chrome.com/docs/ai/built-in-apis)</small>
-<small> note: Prompt API is currently in Origin Trial (Targeting stable release in Chrome M148, we are currently in M146), meaning it is not in Chrome today by default. I worked with the experimental flags in Chrome and have the info on how to do this yourself in the nano-a11y-auditor readme. </small>
+<small> note: These APIS are experimental and in varying statuses. For example, Prompt API is currently in Origin Trial, meaning it is not in Chrome today by default. I worked with the experimental flags in Chrome and have the info on how to do this yourself in the [nano-a11y-auditor readme](https://github.com/shkeating/nano-a11y-audit). </small>
 
 ---
 
 ## System Architecture
-
-![System Architecture: axe-core, Gemini, and WCAG EM Report](img/axe-gemini-wcagem.svg)
 
 * **Phase 1: Static** (axe + text Nano rules)
 * **Phase 2: Visual** (Screenshots + Multimodal Nano)
@@ -96,16 +96,11 @@ Instead of AI doing everything, delegate appropriately:
 
 ---
 
-Demonstration
-
----
-
 ## Experimental Design
-Evaluating what my tool can uncover vs aXe alone (control) vs. GenA11y flgship tool across three distinct datasets:
+Evaluating what my tool can uncover vs aXe alone (control) vs. GenA11y flagship tool study's datasets that we had "answer keys" for to reliably check for % of issues captured
 
 1. **GDS Tool Audit:** Baseline coverage & semantic reasoning.
 2. **Deque Mars Site:** Dynamic behavior & realistic "trap" data.
-3. **Synthetic Robustness:** Semantic precision against valid but non-functional code.
 
 <small>source: [GDS Tool Audit (alphagov, 2017)](https://github.com/alphagov/accessibility-tool-audit); [Destination Mars (Deque Systems, 2025)](https://dequeuniversity.com/demo/mars/)</small>
 
@@ -127,24 +122,25 @@ State-of-the-art LLM AI tools achieve ~87.6% recall. By combining axe with the C
 
 ---
 
-## Catching the Uncatchable
+## Key findings
 Axe struggles with criteria requiring viewport manipulation.
-* **Reflow (1.4.10) & Resize Text (1.4.4):** * axe recall: 0% 
+* **Reflow (1.4.10) & Resize Text (1.4.4):** 
+  * axe recall: 0% 
   * nano-a11y-auditor recall: 100%
 
+Axe partially tests for some criteria, nano-a11y audit in some cases made it so we could get a better picture
+* Deterministic linters pass technically valid but functionally exclusionary code. 
+* The Nano model acts as a proxy to flag context-based failures. 
+* For some criteria, the tool I built was able to "finish the job" on some criteria it cannot check for fully on its own (ex: it can check if an image has alt text, not if its outright wrong)
+
 ---
 
-## Semantic Robustness 
-Deterministic linters pass technically valid but functionally exclusionary code. The Nano model acts as a proxy to flag context-based failures.
-
----
-
-## Operational Viability
+## Test Run Duration Comparison
 * Consistent execution times locally.
 * Eliminated eternal API call latency.
 * **100% On-Device Processing:** Zero sensitive data sent to the cloud.
 
-![Test Run Duration](img/test-run-duration.jpg)
+![Test Run Duration](img/test-run-duration.png)
 
 <small>source: [Honey, I shrunk the AI (McConnon, 2025)](https://www.ibm.com/think/insights/slm-edge-computing)</small>
 
@@ -152,7 +148,7 @@ Deterministic linters pass technically valid but functionally exclusionary code.
 
 ## Live Demo: nano-a11y-auditor
 
-![Test Run and Results](img/test-run-and-results.jpg)
+<iframe width="560" height="315" src="https://www.youtube.com/embed/diKByXDk7t4?si=62T1Y2hKwltIrCHO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
@@ -174,5 +170,5 @@ Deterministic linters pass technically valid but functionally exclusionary code.
 ## Thank You / Q&A
 
 Shauna Keating
-skeating@oswego.edu
+skeating@oswego.edu <br>
 **Project Repository:** [github.com/shkeating/nano-a11y-audit](https://github.com/shkeating/nano-a11y-audit)
