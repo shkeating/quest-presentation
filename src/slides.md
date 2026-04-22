@@ -24,9 +24,7 @@ SUNY Oswego Dept of Computer Science
 ## The LLM Trade-off
 * Recent studies prove Large Language Models (LLMs) can close this gap. In 2025, multiple studies were published showing promising reuslts in expanding uaotmated testing using flagship LLMs such as GPT 4o and Claude Sonnet, which used APIs to query the LLMs against public web page content.
 
-<small>source: [Enhancing Web Accessibility (He, Huq, & Malek, 2025)]
-<br>
-(https://seal.ics.uci.edu/projects/GenA11y/index.html); [RoboWCAG (Sheitanov 2025)](https://trepo.tuni.fi/handle/10024/231152)</small>
+<small>source: [Enhancing Web Accessibility (He, Huq, & Malek, 2025)](https://seal.ics.uci.edu/projects/GenA11y/index.html) <br> [RoboWCAG (Sheitanov 2025)](https://trepo.tuni.fi/handle/10024/231152)</small>
 
 ---
 
@@ -50,7 +48,7 @@ Just because we **can** use the biggest model possible to do **everything**... s
 ---
 
 ## SLMs: Small Language Models
-* Shifting from massive, general LLMs to specialized **Small Language Models (SLMs)**.
+* Shifting from massive, general LLMs to specialized **Small Language Models (SLMs)** (compact AI systems with fewer parameters).
 * Google Chrome has the experimental built-in **Gemini Nano** model, which is 2GB and is hosted entirely on the user's machine. Not fully released yet, but an easy avenue to access SLMs that need browser context.
 * Model comes to the data, data never leaves the network.
 * Free to use, no token limits or money needed to use
@@ -60,15 +58,16 @@ Just because we **can** use the biggest model possible to do **everything**... s
 ---
 
 ## Introducing nano-a11y-auditor
-A browser extension combining traditional deterministic testing with on-device generative AI.
+A browser extension combining axe-core with on-device generative AI.
 
 ![Active Test Run of nano-a11y-auditor](img/active-test-run.jpg)
 
-We don't need to use AI for absolutely everything. aXe does a great job testing for what it can test for.
+### My goals
 
-We can extend this capability with AI tools, and deliver the right context via js extraction, to make is possible to use a smaller model with less parameters.
-
-We can do this in a user-friendly interface, and deliver easy to understand result metrics, and hand off data formatted for use in WCAG EM report tool so user can test for remaining criteria, and clearly see whats left to do.
+1. Not use AI for absolutely everything; axe does a great job testing for what it can test for
+2. Extend this capability with AI tools, and deliver the right context via js extraction, to make is possible to use a smaller model, and still get accurate results.
+3. Provide a user-friendly interface, and deliver easy to understand result metrics that other automated accessibility tools don't 
+4. Data compatibility with industry standard WCAG EM report tool. This allows the user to test for remaining criteria, and clearly see whats left to do, or even hand it off to someone with more accessibility experience to get assistance.
 
 ---
 
@@ -94,6 +93,10 @@ Instead of AI doing everything, delegate appropriately:
 * **Phase 1: Static** (axe + text Nano rules)
 * **Phase 2: Visual** (Screenshots + Multimodal Nano)
 * **Phase 3: Destructive** (High-contrast, zoom manipulations)
+
+---
+
+Demonstration
 
 ---
 
