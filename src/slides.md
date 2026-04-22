@@ -1,7 +1,7 @@
 # Expanding WCAG Success Criteria Testing Coverage with Browser-Native SLMs
 ![nano-a11y-auditor logo](img/logo-light-text.png)
 
-**Shauna Keating**
+**Shauna Keating**, Trusted Tester, CPACC
 <br>
 Supervisor: Vanessa Maike
 <br>
@@ -170,6 +170,6 @@ Axe partially tests for some criteria, nano-a11y audit in some cases made it so 
 
 ## Thank You / Q&A
 
-Shauna Keating
+Shauna Keating, Trusted Tester, CPACC
 skeating@oswego.edu <br>
 **Project Repository:** [github.com/shkeating/nano-a11y-audit](https://github.com/shkeating/nano-a11y-audit)
