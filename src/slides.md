@@ -146,9 +146,10 @@ Axe partially tests for some criteria, nano-a11y audit in some cases made it so 
 
 ---
 
-## Live Demo: nano-a11y-auditor
+## Demo: nano-a11y-audit
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/diKByXDk7t4?si=62T1Y2hKwltIrCHO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 
 ---
 
