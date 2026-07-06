@@ -1,175 +1,98 @@
 # Expanding WCAG Success Criteria Testing Coverage with Browser-Native SLMs
 ![nano-a11y-auditor logo](img/logo-light-text.png)
 
-**Shauna Keating**, Trusted Tester, CPACC
-<br>
-Supervisor: Vanessa Maike
-<br>
-Human Computer Interaction Masters Program
-<br>
-SUNY Oswego Dept of Computer Science
+**Shauna Keating** & Vanessa Maike\
+Department of Computer Science \
+State University of New York at Oswego\
+Oswego, NY, USA\
+*2nd IEEE International Workshop on Intelligent Tools for Accessibility (ITA)*
 
 ---
 
-## Automated Accessibility Testing
-* Automated tools provide excellent baseline coverage.
-* Engine examples: axe-core (powers Lighthouse, Accessibility Insights for Web).
-* Catches ~57% of total issue instances (16 of 50 WCAG 2.1 AA criteria).
-* Leaves 43% of issues to resource-intensive manual testing.
+## The Automation Ceiling & The LLM Trade-off
 
-<small>source: [Deque Automated Accessibility Testing Coverage Report (Deque 2025)](https://www.deque.com/automated-accessibility-coverage-report/)</small>
+* **The Baseline:** Deterministic tools (like axe-core) catch ~57% of issues, leaving 43% to manual testing.
+* **The LLM Solution:** Flagship models (GPT-4o, Claude Sonnet) can close this gap, but introduce critical trade-offs:
+  * High financial costs for API credits and massive context windows.
+  * **Data Privacy:** Transmits proprietary/secure DOM data to external cloud servers.
+  * Incompatible with local development environments or authenticated states containing PII.
 
----
-
-## The LLM Trade-off
-Recent studies prove Large Language Models (LLMs) can close this gap. In 2025, multiple studies were published showing promising reuslts in expanding uaotmated testing using flagship LLMs such as GPT 4o and Claude Sonnet, which used APIs to query the LLMs against public web page content.
-
-<small>source: [Enhancing Web Accessibility (He, Huq, & Malek, 2025)](https://seal.ics.uci.edu/projects/GenA11y/index.html) <br> [RoboWCAG (Sheitanov 2025)](https://trepo.tuni.fi/handle/10024/231152)</small>
-
----
-
-## LLM tradeoffs
-
-* High financial cost for API credits.
-* Massive context windows exhaust limits quickly.
-* **Data Privacy:** Transmits proprietary/secure page data to external cloud servers.
-* Only available for websites that are live and public - not containing PII - even if you don't care about security there is no way for these tools to access your site
-
-<small>source: [Enhancing Web Accessibility (He, Huq, & Malek, 2025)](https://seal.ics.uci.edu/projects/GenA11y/index.html); 
-<br>
-[RoboWCAG (Sheitanov 2025)](https://trepo.tuni.fi/handle/10024/231152)</small>
-
----
-
-## LLM tradeoffs
-
-Just because we **can** use the biggest model possible to do **everything**... should we? There are scenarios where the cybersecurity and token usage limits are not viable. 
-
----
-
-## SLMs: Small Language Models
-* Shifting from massive, general LLMs to specialized **Small Language Models (SLMs)**, compact AI systems with fewer parameters.
-* Google Chrome has the experimental built-in **Gemini Nano** model, which is 2GB and is hosted entirely on the user's machine. Not fully released yet, but an easy avenue to access SLMs that need browser context.
-* Model comes to the data, data never leaves the network.
-* Free to use, no token limits or money needed to use
-
-<small>source: [Small Language Models are the Future of Agentic AI (Belcak et al. 2025)](https://research.nvidia.com/labs/lpr/slm-agents/), [Google Chrome: Built in AI APIs](https://developer.chrome.com/docs/ai/built-in-apis)</small>
+<small>Sources: Deque Automated Accessibility Testing Coverage Report (2025); Enhancing Web Accessibility (He, Huq, & Malek, 2025); RoboWCAG (Sheitanov 2025)</small>
 
 ---
 
 ## Introducing nano-a11y-auditor
-A browser extension combining axe-core with on-device SLMs, and data optimization and metrics in line with accessibility industry standards.
 
-![Active Test Run of nano-a11y-auditor](img/active-test-run.png)
+A hybrid browser extension combining deterministic static analysis with on-device Small Language Models (SLMs).
+
+![bg right:40% 90%](img/active-test-run.png)
+
 
 ---
 ## Introducing nano-a11y-auditor
-### My goals
 
-1. Not use AI for absolutely everything; axe does a great job testing for what it can test for - many of the tools I looked at used AI prompting for things easily determined with the basic scripts in axe-core
-2. Extend this capability with AI tools, and deliver the right context via js extraction, to make is possible to use a smaller model, and still get accurate results.
-3. Provide a user-friendly interface, and deliver easy to understand result metrics that other automated accessibility tools don't 
-4. Data compatibility with industry standard WCAG EM report tool. This allows the user to test for remaining criteria, and clearly see whats left to do, or even hand it off to someone with more accessibility experience to get assistance.
+A hybrid browser extension combining deterministic static analysis with on-device Small Language Models (SLMs).
+
+* **Gemini Nano Integration:** Utilizes Chrome's built-in, 2GB local model. 
+* **Zero Data Egress:** The model comes to the data. Secure, authenticated DOM context never leaves the local network.
+* **WCAG-EM Compatible:** Designed to output data compatible with industry-standard reporting tools to keep humans in the loop.
 
 ---
 
-## What's under the hood
-Instead of AI doing everything, delegate appropriately:
+## Under the Hood: Smart Delegation
+Instead of using AI for everything, the architecture delegates tasks to the most efficient engine:
+
 1. **[axe-core](https://github.com/dequelabs/axe-core):** Fast, reliable code-level syntax evaluation.
 2. **On-Device AI Layer:**
-   * **[Prompt API (Gemini Nano)](https://github.com/webmachinelearning/prompt-api):** Evaluates semantic context (e.g., identifying vague link text).
-   * **[Language Detector API](https://developer.mozilla.org/en-US/docs/Web/API/Translator_and_Language_Detector_APIs):** Cross-references the coded `lang` attribute against the actual text.
-   * **[Summarizer API](https://developer.mozilla.org/en-US/docs/Web/API/Summarizer):** Condenses DOM context for more efficient evaluation.
+   * **Prompt API:** Evaluates semantic context (e.g., vague link text).
+   * **Language Detector API:** Validates coded `lang` attributes against rendered text.
+   * **Summarizer API:** Condenses DOM context for efficient evaluation.
 3. **[Chrome Debugger API](https://developer.chrome.com/docs/extensions/reference/api/debugger):** Validates layout, reflow, and dynamic viewports.
-4. **[Shape Detector API](https://developer.chrome.com/docs/capabilities/shape-detection):** Assists with multimodal and visual structure checks.
 
-<small>source: [Built-in AI APIs (Klepper 2024)](https://developer.chrome.com/docs/ai/built-in-apis)</small>
-<small> note: These APIS are experimental and in varying statuses. For example, Prompt API is currently in Origin Trial, meaning it is not in Chrome today by default. I worked with the experimental flags in Chrome and have the info on how to do this yourself in the [nano-a11y-auditor readme](https://github.com/shkeating/nano-a11y-audit). </small>
+<small>Note: Built-in Chrome AI APIs currently require experimental flags to run locally.</small>
 
 ---
 
-## System Architecture
+## Execution Architecture
 
-* **Phase 1: Static** (axe + text Nano rules)
-* **Phase 2: Visual** (Screenshots + Multimodal Nano)
-* **Phase 3: Destructive** (High-contrast, zoom manipulations)
+To ensure stability, the extension executes in three isolated phases:
 
----
-
-## Experimental Design
-Evaluating what my tool can uncover vs aXe alone (control) vs. GenA11y flagship tool study's datasets that we had "answer keys" for to reliably check for % of issues captured
-
-1. **GDS Tool Audit:** Baseline coverage & semantic reasoning.
-2. **Deque Mars Site:** Dynamic behavior & realistic "trap" data.
-
-<small>source: [GDS Tool Audit (alphagov, 2017)](https://github.com/alphagov/accessibility-tool-audit); [Destination Mars (Deque Systems, 2025)](https://dequeuniversity.com/demo/mars/)</small>
+* **Phase 1: Static** (axe-core + text-based Nano rules run in parallel)
+* **Phase 2: Visual** (Screenshots + Multimodal Nano for shape/structure checks)
+* **Phase 3: Destructive** (Invasive layout simulations like high-contrast or zoom manipulations are run last to protect the DOM)
 
 ---
 
-## Results: Baseline Coverage
-nano-a11y-auditor doubled the barrier detection rate of axe alone, successfully identifying semantic issues like Vague Link Text the static scripts in axe can't make a call on alone.
+## Experimental Results
 
-![Recall rates on GDS Accessibility Tool Audit page](img/recall-rates-gds-page.png)
+Evaluated against the GDS Tool Audit and the Deque Mars Site.
 
----
-
-## Results: Dynamic Behavior
-State-of-the-art LLM AI tools achieve ~87.6% recall. By combining axe with the Chrome Debugger, our SLM hybrid approached this benchmark securely (84.6%) in initial tests.
-
-![Comparative Recall Rates](img/comparitive-recall-rates.png)
-
-<small>source: [Enhancing Web Accessibility (He, Huq, & Malek, 2025)](https://seal.ics.uci.edu/projects/GenA11y/index.html)</small>
-
----
-
-## Key findings
-Axe struggles with criteria requiring viewport manipulation.
-* **Reflow (1.4.10) & Resize Text (1.4.4):** 
-  * axe recall: 0% 
-  * nano-a11y-auditor recall: 100%
-
-Axe partially tests for some criteria, nano-a11y audit in some cases made it so we could get a better picture
-* Deterministic linters pass technically valid but functionally exclusionary code. 
-* The Nano model acts as a proxy to flag context-based failures. 
-* For some criteria, the tool I built was able to "finish the job" on some criteria it cannot check for fully on its own (ex: it can check if an image has alt text, not if its outright wrong)
-
----
-
-## Test Run Duration Comparison
-* Consistent execution times locally.
-* Eliminated eternal API call latency.
-* **100% On-Device Processing:** Zero sensitive data sent to the cloud.
-
-![Test Run Duration](img/test-run-duration.png)
-
-<small>source: [Honey, I shrunk the AI (McConnon, 2025)](https://www.ibm.com/think/insights/slm-edge-computing)</small>
+* **Baseline Coverage:** Doubled the barrier detection rate of axe alone, identifying semantic issues (like Vague Link Text) that static scripts miss.
+* **Dynamic Behavior:** Achieved an **84.6% recall**, approaching the ~87.6% recall of state-of-the-art LLMs, but operating entirely on-device.
+* **Viewport Manipulation:** Achieved a **100% recall** on Reflow (1.4.10) and Resize Text (1.4.4) using the Chrome Debugger, where axe alone returns 0%.
+* **Speed:** Eliminated external API latency, resulting in highly consistent local execution times.
 
 ---
 
 ## Demo: nano-a11y-audit
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/diKByXDk7t4?si=62T1Y2hKwltIrCHO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-
----
-
-## Conclusion
-* AI should **wrap** static tools, not replace them.
-* High system recall is achievable without the computational overhead of sending every DOM node to an LLM.
-* SLMs in the browser provide a secure, cost-effective path forward for expanding automated accessibility testing in more scenarios.
+<iframe width="720" height="405" src="https://www.youtube.com/embed/diKByXDk7t4?si=62T1Y2hKwltIrCHO" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ---
 
 ## The Future of Accessibility Testing
-* **Human accessibility specialists are not going away;** our expertise is more critical than ever.
-* AI expands our foundation, acting as a much stronger **"first alert system."**
-* It encourages teams to come to us for testing *while* they are still building, instead of right before they ship.
-* **Proactive > Reactive:** Remediation is expensive work, and avoiding it entirely is the ultimate goal.
+
+* **AI should wrap static tools, not replace them.** High system recall is achievable without the computational overhead of sending every DOM node to an LLM, or using artificial intelligence when other technology can accomplish the same outcome with higher efficiency.
+* **Human specialists are not going away.** Our expertise is more critical than ever.
+* AI can expand our accessibility testing foundation, acting as a powerful **"first alert system"** integrating into our automated testing step.
+* It encourages teams to test more often and while *while* they build, shifting the industry from reactive remediation to proactive inclusion.
 
 ---
 
 ## Thank You / Q&A
 
-Shauna Keating, Trusted Tester, CPACC
-skeating@oswego.edu <br>
-**Project Repository:** [github.com/shkeating/nano-a11y-audit](https://github.com/shkeating/nano-a11y-audit)
+**Shauna Keating**, Trusted Tester, CPACC
+skeating@oswego.edu 
+
+**Project Repository:** 
+[github.com/shkeating/nano-a11y-audit](https://github.com/shkeating/nano-a11y-audit)
