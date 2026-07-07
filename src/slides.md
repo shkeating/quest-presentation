@@ -1,5 +1,4 @@
 # Expanding WCAG Success Criteria Testing Coverage with Browser-Native SLMs
-![nano-a11y-auditor logo](img/logo-light-text.png)
 
 **Shauna Keating** & Vanessa Maike\
 Department of Computer Science \
