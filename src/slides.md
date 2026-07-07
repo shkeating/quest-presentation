@@ -9,6 +9,20 @@ Oswego, NY, USA\
 
 ---
 
+## Automated Accessibility Testing
+
+![accessibility testing pyramid](/img/pyramid.png)
+
+
+---
+## AI & Accessibility Testing
+
+AI is increasingly integrated into automated accessibility testing by leveraging machine learning to better detect complex, context-dependent issues that traditional rule-based scanners often miss. These tools are evolving to provide more intelligent remediation suggestions, effectively reducing false positives and helping teams bridge the gap between technical compliance and truly inclusive user experiences.
+
+There has been promising studies showing LLM-based solutions demonstrating capability in expanding web accessibility testing automation.
+
+---
+
 ## The Automation Ceiling & The LLM Trade-off
 
 * **The Baseline:** Deterministic tools (like axe-core) catch ~57% of issues, leaving 43% to manual testing.
@@ -23,7 +37,7 @@ Oswego, NY, USA\
 
 ## Introducing nano-a11y-auditor
 
-A hybrid browser extension combining deterministic static analysis with on-device Small Language Models (SLMs).
+A hybrid browser extension combining deterministic static analysis with an on-device Small Language Model (SLM).
 
 ![bg right:40% 90%](img/active-test-run.png)
 
@@ -31,7 +45,7 @@ A hybrid browser extension combining deterministic static analysis with on-devic
 ---
 ## Introducing nano-a11y-auditor
 
-A hybrid browser extension combining deterministic static analysis with on-device Small Language Models (SLMs).
+A hybrid browser extension combining deterministic static analysis with an on-device Small Language Model (SLM).
 
 * **Gemini Nano Integration:** Utilizes Chrome's built-in, 2GB local model. 
 * **Zero Data Egress:** The model comes to the data. Secure, authenticated DOM context never leaves the local network.
